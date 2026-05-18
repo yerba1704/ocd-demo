@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="Technical documentation for PL/SQL package PKG_SAMPLE.">
+  <meta name="author" content="ora* CODECOP -- https://github.com/yerba1704/ocd">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PKG_SAMPLE</title>
+</head>
+<body>
+  <main>
+    <article>
+<!-- generated code by ora* CODECOP -->
+<h1>PKG_SAMPLE</h1>
+<p>This is an example of a package description.
+
+Line breaks are ignored but blank lines results in paragraphs.</p>
+<ul>
+<li><a href="#CONSTANTS">Constants</a></li>
+<li><a href="#DATATYPES">Data Types</a></li>
+<li><a href="#EXCEPTIONS">Exceptions</a></li>
+<li><a href="#F_SQUAREFUNCTIONSIGNATURE1">F_SQUARE Function Signature 1</a></li>
+<li><a href="#F_SQUAREFUNCTIONSIGNATURE5">F_SQUARE Function Signature 5</a></li>
+<li><a href="#P_NOOPPROCEDURESIGNATURE1">P_NOOP Procedure Signature 1</a></li>
+<li><a href="#P_NOOPPROCEDURESIGNATURE2">P_NOOP Procedure Signature 2</a></li>
+</ul>
+<h2 id="CONSTANTS">Constants</h2>
+<p>The PKG_SAMPLE package defines several constants for specifying parameter values.</p>
+<table><tr><th>Name</th><th>Description</th></tr>
+<tr><td>C_MAGIC_NUMBER</td><td>This is an example of a constant description.</td></tr>
+</table>
+<h2 id="EXCEPTIONS">Exceptions</h2>
+<p>The following table lists exceptions that have been defined for PKG_SAMPLE.</p>
+<table><tr><th>Name</th><th>Description</th></tr>
+<tr><td>E_PARSING_FAILED</td><td>This is an example of an exception description.</td></tr>
+</table>
+<h2 id="DATATYPES">Data Types</h2>
+<p>The PKG_SAMPLE package uses the following data types.</p>
+<table><tr><th>Name</th><th>Description</th></tr>
+<tr><td>T_NUMBER_AA</td><td>This is an example of an associative array description. It was formerly called PL/SQL table or index-by table.</td></tr>
+<tr><td>T_NUMBER_NT</td><td>This is an example of a nested table description.</td></tr>
+<tr><td>T_NUMBER_VA</td><td>This is an example of a varray (variable-size array) description.</td></tr>
+<tr><td>T_OS_R</td><td>This is an example of an user-defined record type description.</td></tr>
+</table>
+<h2 id="F_SQUAREFUNCTIONSIGNATURE1">F_SQUARE Function Signature 1</h2>
+<p>Function for square a number. The return value is the result of multiplying the parameter by itself.</p>
+<h3>Syntax</h3>
+<code>function f_square(
+    i_value in number default 3)
+  return number;</code>
+<h3>Parameter</h3>
+<table><tr><th>Parameter</th><th>Description</th></tr><tr><td>I_VALUE</td><td>A numeric value. The square of any non-zero real number, whether positive or negative, is always a positive number.</td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table>
+<h3>Examples</h3>
+<p></p><code></code><p>EXAMPLE_1</p><code>select pkg_sample.f_square from dual;</code><p>EXAMPLE_2</p><code>select pkg_sample.f_square(4)
+  from dual;</code><p>EXAMPLE_3</p><code>begin
+  dbms_output.put_line( 'square of 2 is '||f_square(2) );
+end;</code>
+<h2 id="F_SQUAREFUNCTIONSIGNATURE5">F_SQUARE Function Signature 5</h2>
+<p>Function xyz for square a number.</p>
+<h3>Syntax</h3>
+<code>function f_square(
+    i_a in date,
+    i_b in date)
+  return number;</code>
+<h3>Parameters</h3>
+<table><tr><th>Parameter</th><th>Description</th></tr><tr><td>I_A</td><td>Abc.</td></tr><tr><td>I_B</td><td>Def.</td></tr></table>
+<h2 id="P_NOOPPROCEDURESIGNATURE1">P_NOOP Procedure Signature 1</h2>
+<p>This is an example of a procedure description.</p>
+<h3>Syntax</h3>
+<code>procedure p_noop;</code>
+<h2 id="P_NOOPPROCEDURESIGNATURE2">P_NOOP Procedure Signature 2</h2>
+<p>This is an example of a procedure description.</p>
+<h3>Syntax</h3>
+<code>procedure p_noop(
+    i_x in pl/sql boolean,
+    i_y in date);</code>
+<h3>Parameters</h3>
+<table><tr><th>Parameter</th><th>Description</th></tr><tr><td>I_X</td><td></td></tr><tr><td>I_Y</td><td></td></tr></table>
+    </article>
+  </main>
+</body>
+</html>
+
+

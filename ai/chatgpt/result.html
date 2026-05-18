@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>PKG_SAMPLE Documentation</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: #1f2937;
+  color: white;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-top: 20px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+.sidebar a {
+  display: block;
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.sidebar a:hover {
+  color: white;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 30px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.section {
+  margin-bottom: 50px;
+}
+
+.code {
+  background: #111827;
+  color: #e5e7eb;
+  padding: 15px;
+  border-radius: 6px;
+  font-family: monospace;
+  white-space: pre;
+}
+
+/* Table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background: #f3f4f6;
+  text-align: left;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar" id="nav"></div>
+
+<div class="content" id="content"></div>
+
+<script>
+const data = {
+  "name": "PKG_SAMPLE",
+  "desc": "This is an example of a package description.\n\nLine breaks are ignored but blank lines results in paragraphs.",
+  "components": [ /* JSON aus deiner Eingabe hier vollständig einfügen */
+  {
+      "name":"P_NOOP","type":"PROCEDURE","desc":"This is an example of a procedure description.","syntax":"procedure p_noop;"
+  },
+  {
+      "name":"P_NOOP","type":"PROCEDURE","desc":"This is an example of a procedure description.","syntax":"procedure p_noop(\n    i_x in pl/sql boolean,\n    i_y in date);",
+      "parameters":[{"name":"I_X","desc":null},{"name":"I_Y","desc":null}]
+  },
+  {
+      "name":"F_SQUARE","type":"FUNCTION","desc":"Function for square a number.","syntax":"function f_square(\n    i_value in number default 3)\n  return number;",
+      "parameters":[{"name":"I_VALUE","desc":"A numeric value."}]
+  },
+  {
+      "name":"F_SQUARE","type":"FUNCTION","desc":"Function xyz for square a number.","syntax":"function f_square(\n    i_a in date,\n    i_b in date)\n  return number;",
+      "parameters":[{"name":"I_A","desc":"Abc."},{"name":"I_B","desc":"Def."}]
+  },
+  {
+      "name":"C_MAGIC_NUMBER","type":"CONSTANT","desc":"This is an example of a constant description."
+  }
+  ]
+};
+
+/* --- Build Navigation --- */
+const nav = document.getElementById("nav");
+const content = document.getElementById("content");
+
+const grouped = {};
+data.components.forEach(c => {
+  if (!grouped[c.type]) grouped[c.type] = [];
+  grouped[c.type].push(c);
+});
+
+nav.innerHTML = `<h1>${data.name}</h1>`;
+
+Object.keys(grouped).forEach(type => {
+  nav.innerHTML += `<h2>${type}</h2>`;
+  grouped[type].forEach((c, i) => {
+    const id = `${c.name}_${i}`;
+    nav.innerHTML += `<a href="#${id}">${c.name}</a>`;
+  });
+});
+
+/* --- Build Content --- */
+content.innerHTML = `<h1>${data.name}</h1>`;
+
+// Beschreibung (Paragraphs)
+data.desc.split("\n\n").forEach(p => {
+  content.innerHTML += `<p>${p}</p>`;
+});
+
+Object.keys(grouped).forEach(type => {
+  content.innerHTML += `<h2>${type}</h2>`;
+
+  grouped[type].forEach((c, i) => {
+    const id = `${c.name}_${i}`;
+
+    let html = `<div class="section" id="${id}">
+      <h3>${c.name}</h3>
+      <p>${c.desc || ""}</p>`;
+
+    if (c.syntax) {
+      html += `<div class="code">${c.syntax}</div>`;
+    }
+
+    if (c.parameters) {
+      html += `<h4>Parameters</h4>
+      <table>
+        <tr><th>Name</th><th>Description</th></tr>`;
+      c.parameters.forEach(p => {
+        html += `<tr>
+          <td>${p.name}</td>
+          <td>${p.desc || "-"}</td>
+        </tr>`;
+      });
+      html += `</table>`;
+    }
+
+    if (c.fields) {
+      html += `<h4>Fields</h4>
+      <table>
+        <tr><th>Name</th><th>Type</th><th>Description</th></tr>`;
+      c.fields.forEach(f => {
+        html += `<tr>
+          <td>${f.name}</td>
+          <td>${f.type}</td>
+          <td>${f.desc}</td>
+        </tr>`;
+      });
+      html += `</table>`;
+    }
+
+    html += `</div>`;
+    content.innerHTML += html;
+  });
+});
+</script>
+
+</body>
+</html>
