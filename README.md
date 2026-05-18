@@ -22,7 +22,7 @@ The `OCD_DEMO` user receives the following privileges:
 
 The following sample packages are included in `OCD_DEMO` after installation:
 
-- [PKG_SAMPLE](ddl/package/pkg_sample.pks) is the official sample package, which is fully documented using the __ora* CODEDOC syntax (OCDs)__. Read [here](https://github.com/yerba1704/ocd/doc/ocds.md) for more information.
+- [PKG_SAMPLE](ddl/package/pkg_sample.pks) is the official sample package, which is fully documented using the __ora* CODEDOC syntax (OCDs)__. Read [here](https://github.com/yerba1704/ocd/blob/main/doc/ocds.md) for more information.
 
 - [APEX_CSS](ddl/package/apex_css.pks) is the original package from Oracle APEX and can be used for comparison.
 
@@ -46,4 +46,4 @@ If you have an interesting feature in mind, that you would like to see in __ora*
 
 ## License
 
-**ora* CODEDOC** is released under the [MIT license](LICENSE).
+__ora* CODEDOC__ is released under the [MIT license](LICENSE).
