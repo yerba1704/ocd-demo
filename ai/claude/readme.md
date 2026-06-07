@@ -1,8 +1,8 @@
-# URL
+## URL
 
 https://use.ai/de/ with Claude Opus 4.1
 
-# PROMPT
+## PROMPT
 
 Baue bitte eine website wie diese hier
 

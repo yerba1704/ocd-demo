@@ -1,8 +1,8 @@
-= URL
+## URL
 
 https://chatgpt.com/de-DE/
 
-= PROMPT
+## PROMPT
 
 Baue bitte eine website wie diese hier
 
@@ -13,6 +13,7 @@ https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_FILE-Procedure.ht
 
 Verwende dafür dieses JSON
 
+```json
 {
   "name" : "PKG_SAMPLE",
   "desc" : "This is an example of a package description.\n\nLine breaks are ignored but blank lines results in paragraphs.",
@@ -116,3 +117,4 @@ Verwende dafür dieses JSON
     }
   ]
 }
+```
