@@ -4,8 +4,8 @@ set serveroutput on
 set feedback off
 declare
   c_website_instead_of_only_html_code constant boolean:=true;
-  c_package_name constant dbms_id_30:='PKG_SAMPLE';
---  c_package_name constant dbms_id_30:='APEX_CSS_MODIFIED';
+--  c_package_name constant dbms_id_30:='PKG_SAMPLE';
+  c_package_name constant dbms_id_30:='APEX_CSS_MODIFIED';
   c_html_skeleton constant clob:=q'[<!doctype html>
 <html lang="en">
 <head>
@@ -32,7 +32,7 @@ declare
   cursor pkg_info is
     select toc_oradb,toc_apex,srt,
            listagg( distinct '<li>'||htf.anchor('#'||upper(replace(toc_oradb,' ')),toc_oradb)||'</li>'||chr(10) ) within group(order by toc_oradb) over (partition by 1) as tocinfo_oradb,
-           listagg( distinct '<li>'||htf.anchor('#'||upper(replace(toc_apex,' ')),toc_apex)||'</li>'||chr(10) ) within group(order by toc_apex) over (partition by 1) as tocinfo_apex,
+           listagg( distinct '<li>'||htf.anchor('#'||upper(replace(toc_apex,' ')),toc_apex)||'</li>'||chr(10) ) within group(order by srt) over (partition by 1) as tocinfo_apex,
            package_name,package_desc,
            component_name, component_type, component_desc, component_syntax, component_index,
            case when srt=lead(srt,1) over (order by srt) then 0 else 1 end as last_component_type_fl,
@@ -43,7 +43,7 @@ declare
            end as parameterinfo,
            any_value(parameter_count) as parameter_count,
            case when any_value(example_count) is not null then
-            listagg('<p>'||example_name||'</p>'||htf.code(example_code)) within group (order by parameter_index)
+            listagg('<p>'||example_name||'</p>'||htf.code(htf.preopen||example_code||htf.preclose)) within group (order by parameter_index, example_code)
            end as exampleinfo,
            any_value(example_count) as example_count
       from (
@@ -158,7 +158,7 @@ begin
         attach( htf.header (nsize=>2,cheader=>i.toc_apex,cattributes=>'id="'||upper(replace(i.toc_apex,' '))||'"') );
         attach( '<p>'||i.component_desc||'</p>' );
         attach( htf.header (nsize=>3,cheader=>'Syntax') );
-        attach( htf.code(i.component_syntax) );
+        attach( htf.code(htf.preopen||i.component_syntax||htf.preclose) );
         if i.parameterinfo is not null then 
           attach( htf.header (nsize=>3,cheader=>'Parameter'||case when i.parameter_count>1 then 's' end) );
           attach( i.parameterinfo );

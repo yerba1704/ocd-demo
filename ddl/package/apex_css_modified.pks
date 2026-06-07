@@ -52,30 +52,22 @@ procedure add_file (
 -- - jQueryUI
 --
 -- If a library has already been added, it is not added a second time.
---
--- Parameters:
--- * p_library:     Use one of the `c_library_*` constants
--- * p_file_name:   Specifies the file name without version, `.min` and `.css`
---                  If no file name is provided, the default library file will be loaded.
--- * p_directory:   (Optional) Directory where the file P_FILE_NAME is located.
--- * p_version:     (Optional) If no value is provided, then uses the same version shipped with APEX.
--- * p_media_query: (Optional) Value that is set as media query.
--- * p_attributes:  Extra attributes to add to the link tag.
---                  Note: Callers are responsible for escaping this parameter.
---
--- Example:
---
--- The following example loads the CSS file of the Accordion
--- component of the jQuery UI.
---
---     begin
---         apex_css.add_3rd_party_library_file (
---             p_library   => apex_css.c_library_jquery_ui,
---             p_file_name => 'jquery.ui.accordion' );
---     end;
---
--- Deprecated:
---==============================================================================
+-- @Use one of the `c_library_*` constants
+-- @Specifies the file name without version, `.min` and `.css`
+-- If no file name is provided, the default library file will be loaded.
+-- @Directory where the file P_FILE_NAME is located.
+-- @If no value is provided, then uses the same version shipped with APEX.
+-- @Value that is set as media query.
+-- @Extra attributes to add to the link tag.
+-- Note: Callers are responsible for escaping this parameter.
+-- ^
+---- The following example loads the CSS file of the Accordion
+---- component of the jQuery UI.
+--begin
+--  apex_css.add_3rd_party_library_file (
+--    p_library   => apex_css.c_library_jquery_ui,
+--    p_file_name => 'jquery.ui.accordion' );
+--end;
 procedure add_3rd_party_library_file (
     p_library     in varchar2,
     p_file_name   in varchar2 default null,
@@ -83,41 +75,26 @@ procedure add_3rd_party_library_file (
     p_version     in varchar2 default null,
     p_media_query in varchar2 default null,
     p_attributes  in varchar2 default null );
---
---==============================================================================
+
 -- This procedure adds a CSS style snippet that is included inline in the HTML output.
 -- Use this procedure to add new CSS style declarations.
---
--- Parameters:
--- * p_css: The CSS style snippet. For example, `#test {color:#fff}`
--- * p_key: Identifier for the style snippet. If specified and a style snippet
---          with the same name has already been added the new style snippet will
---          be ignored.
---
--- Example:
---
--- Adds an inline CSS definition for the class autocomplete into the HTML page.
--- The key `autocomplete_widget` prevents the definition from being included another
--- time if the `apex_css.add` is called another time.
---
---     begin
---         apex_css.add (
---             p_css => '.autocomplete { color:#ffffff }',
---             p_key => 'autocomplete_widget' );
---     end;
---==============================================================================
+-- @The CSS style snippet. For example, `#test {color:#fff}`
+-- @Identifier for the style snippet. If specified and a style snippet
+-- with the same name has already been added the new style snippet will
+-- be ignored.
+-- ^
+---- Adds an inline CSS definition for the class autocomplete into the HTML page.
+---- The key `autocomplete_widget` prevents the definition from being included another
+---- time if the `apex_css.add` is called another time.
+--begin
+--  apex_css.add (
+--    p_css => '.autocomplete { color:#ffffff }',
+--    p_key => 'autocomplete_widget' );
+--end;
 procedure add (
     p_css in varchar2,
     p_key in varchar2 default null );
---
---==============================================================================
--- Internal:
---
--- Deprecated:
---
--- See Also:
 -- Use WWV_FLOW_API.CREATE_APP_STATIC_FILE and WWV_FLOW_API.CREATE_WORKSPACE_STATIC_FILE instead.
---==============================================================================
 function new_css_repository_record (
     p_name           in out varchar2,
     p_varchar2_table     in sys.dbms_sql.varchar2_table,
@@ -126,15 +103,8 @@ function new_css_repository_record (
     p_notes              in varchar2 )
     return number
     ;
---
---==============================================================================
--- Internal:
---
--- Deprecated:
---==============================================================================
 procedure remove_css (
     p_css_name in varchar2,
     p_flow_id  in number   default null );
---
 end apex_css_modified;
 /
