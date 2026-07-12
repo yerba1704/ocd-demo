@@ -163,7 +163,7 @@ begin
           attach( htf.header (nsize=>3,cheader=>'Parameter'||case when i.parameter_count>1 then 's' end) );
           attach( i.parameterinfo );
         end if;
-  --TODO subprogram example (nicht als stumpfe tabelle)
+  --TODO subprogram example
         if i.exampleinfo is not null then
           attach( htf.header (nsize=>3,cheader=>'Example'||case when i.example_count>1 then 's' end) );
           attach( i.exampleinfo );

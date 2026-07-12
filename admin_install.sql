@@ -43,13 +43,9 @@ prompt >>> create some apex packages
 @ddl/package/pkg_sample.pks
 @ddl/package/apex_css.pks
 @ddl/package/apex_css_modified.pks
-@ddl/type/html_pub_sample.tps
-@ddl/type/html_pub_sample.tpb
 --------------------------------------------------------------------------------
 --prompt >>> create some sys packages
---prompt >>> grant necessary roles
---
---@dcl/worker.pks
---@dcl/public/api.pks
+
+--@ddl/package/....pks
 --------------------------------------------------------------------------------
 prompt >>> done <<<
