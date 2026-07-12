@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Package Reference</title>
+    <style>
+        :root {
+            --oracle-red: #f80000;
+            --text-color: #333333;
+            --bg-light: #f9f9f9;
+            --border-color: #e0e0e0;
+            --link-color: #0066cc;
+            --code-bg: #f4f4f6;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        nav {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            background-color: var(--bg-light);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding: 20px 10px;
+            box-sizing: border-box;
+        }
+
+        nav h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 8px;
+        }
+
+        nav ul li a {
+            display: block;
+            padding: 6px 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background-color: #eef2f7;
+            color: var(--link-color);
+        }
+
+        /* Main Content Container */
+        main {
+            margin-left: 260px;
+            padding: 30px 50px;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        /* Oracle Breadcrumb Style */
+        .breadcrumbs {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .breadcrumbs a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: normal;
+            color: #111;
+            margin-top: 0;
+            border-bottom: 2px solid var(--oracle-red);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: normal;
+            color: #222;
+            margin-top: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        p {
+            margin: 10px 0 20px 0;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Summary Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        table th, table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* Blocks for Syntax/Examples */
+        pre {
+            background-color: var(--code-bg);
+            border-left: 3px solid #ccc;
+            padding: 15px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .indented {
+            margin-left: 20px;
+        }
+
+        .type-tag {
+            font-size: 11px;
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #4a5568;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h3>Package Components</h3>
+        <ul>
+            <li><a href="#package-overview">Overview</a></li>
+            <li><a href="#summary-exceptions">Exceptions Summary</a></li>
+            <li><a href="#summary-constants">Constants Summary</a></li>
+            <li><a href="#summary-subtypes">Subtypes Summary</a></li>
+            <li><a href="#summary-subprograms">Subprograms Summary</a></li>
+            <li><a href="#detailed-subprograms">Subprogram Details</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="breadcrumbs">
+            <a href="#">Database Reference</a> &gt; <a href="#">PL/SQL Packages and Types Reference</a> &gt; API
+        </div>
+
+        <h1 id="package-overview">API Package</h1>
+        <p>The <code>API</code> package contains all information to interact with ora* CODECOP. It is executable by all users and works with invokers rights.</p>
+
+        <h2 id="summary-exceptions">Summary of API Exceptions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Exception</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#E_RULE_FAILED">E_RULE_FAILED</a></td>
+                    <td>The rule failed because the specified SQL returned more than 0 rows.</td>
+                </tr>
+                <tr>
+                    <td><a href="#E_INVALID_RULE_ID">E_INVALID_RULE_ID</a></td>
+                    <td>The given ID for the rule could not be found.</td>
+                </tr>
+                <tr>
+                    <td><a href="#E_INVALID_CODE">E_INVALID_CODE</a></td>
+                    <td>The given CODE for the rule could not be found.</td>
+                </tr>
+                <tr>
+                    <td><a href="#E_INVALID_VALUE">E_INVALID_VALUE</a></td>
+                    <td>The given VALUE for the rule_object, severity, characteristic or tag could not be found.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="summary-constants">Summary of API Constants</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Constant</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>C_RULE_FAILED</td><td>Constant flag mapping to E_RULE_FAILED context.</td></tr>
+                <tr><td>C_INVALID_RULE_ID</td><td>Constant flag mapping to E_INVALID_RULE_ID context.</td></tr>
+                <tr><td>C_INVALID_CODE</td><td>Constant flag mapping to E_INVALID_CODE context.</td></tr>
+                <tr><td>C_INVALID_VALUE</td><td>Constant flag mapping to E_INVALID_VALUE context.</td></tr>
+                <tr><td>PLSQL_UNIT</td><td>(distinct) type_classifcation</td></tr>
+                <tr><td>SQL_DATA_OBJECT</td><td>Database entity classification constant.</td></tr>
+                <tr><td>DATABASE_OBJECT</td><td>Database entity classification constant.</td></tr>
+                <tr><td>APEX</td><td>Application Express target architecture designation.</td></tr>
+                <tr><td>BLOCKER</td><td>Severity level: Blocker</td></tr>
+                <tr><td>CRITICAL</td><td>Severity level: Critical</td></tr>
+                <tr><td>MAJOR</td><td>Severity level: Major</td></tr>
+                <tr><td>MINOR</td><td>Severity level: Minor</td></tr>
+                <tr><td>INFO</td><td>Severity level: Info</td></tr>
+                <tr><td>CHANGEABILITY</td><td>SQALE characteristic: Changeability</td></tr>
+                <tr><td>EFFICIENCY</td><td>SQALE characteristic: Efficiency</td></tr>
+                <tr><td>MAINTAINABILITY</td><td>SQALE characteristic: Maintainability</td></tr>
+                <tr><td>PORTABILITY</td><td>SQALE characteristic: Portability</td></tr>
+                <tr><td>RELIABILITY</td><td>SQALE characteristic: Reliability</td></tr>
+                <tr><td>REUSABILITY</td><td>SQALE characteristic: Reusability</td></tr>
+                <tr><td>SECURITY</td><td>SQALE characteristic: Security</td></tr>
+                <tr><td>TESTABILITY</td><td>SQALE characteristic: Testability</td></tr>
+            </tbody>
+        </table>
+
+        <h2 id="summary-subtypes">Summary of API Subtypes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Subtype</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SMALL_STRING</td>
+                    <td>A string containing max. 20 chars (not nullable).</td>
+                </tr>
+                <tr>
+                    <td>BOOL</td>
+                    <td>A not nullable natural number between 0 and 1.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="summary-subprograms">Summary of API Subprograms</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Subprogram</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#VERIFICATION_RESULT">VERIFICATION_RESULT Function</a></td>
+                    <td>Execute the sql statement from RULE_ID or CODE in RULESET.</td>
+                </tr>
+                <tr>
+                    <td><a href="#CHECK_RULE_PROC">CHECK_RULE Procedure</a></td>
+                    <td>Verify the rule according to the RULE_ID or CODE in RULESET.</td>
+                </tr>
+                <tr>
+                    <td><a href="#CHECK_RULE_FUNC">CHECK_RULE Function</a></td>
+                    <td>Verify the rule according to the RULE_ID or CODE in RULESET.</td>
+                </tr>
+                <tr>
+                    <td><a href="#CHECK_RULES_PROC">CHECK_RULES Procedure</a></td>
+                    <td>Verify all rules that belongs to one of the associated dimensions or flags.</td>
+                </tr>
+                <tr>
+                    <td><a href="#CHECK_RULES_FUNC">CHECK_RULES Function</a></td>
+                    <td>Verify all rules that belongs to one of the associated dimensions or flags.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="detailed-subprograms">Detailed Subprogram Descriptions</h2>
+
+        <h3 id="VERIFICATION_RESULT">VERIFICATION_RESULT Function<span class="type-tag">FUNCTION</span></h3>
+        <p>Execute the sql statement from RULE_ID or CODE in RULESET.</p>
+
+        <h4>Syntax</h4>
+        <pre>function verification_result(
+    i_rule_id_or_code in varchar2);</pre>
+
+        <h4>Parameters</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Parameter</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>i_rule_id_or_code</code></td>
+                    <td>A valid RULE_ID or CODE from RULESET. If not valid exception E_INVALID_RULE_ID or E_INVALID_CODE is raised.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Examples</h4>
+        <pre>select * from occ.api.verification_result(i_rule_id_or_code => 'PARAMETER_NAMING_RULE');</pre>
+
+        <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 40px 0;">
+
+        <h3 id="CHECK_RULE_PROC">CHECK_RULE Procedure<span class="type-tag">PROCEDURE</span></h3>
+        <p>Verify the rule according to the RULE_ID or CODE in RULESET.</p>
+
+        <h4>Syntax</h4>
+        <pre>procedure check_rule(
+    i_rule_id_or_code in varchar2,
+    i_verbose_mode    in boolean default true,
+    i_raise_if_fail   in boolean default false);</pre>
+
+        <h4>Parameters</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Parameter</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>i_rule_id_or_code</code></td>
+                    <td>A valid RULE_ID or CODE from RULESET. If not valid exception e_invalid_rule_id or e_invalid_code is raised.</td>
+                </tr>
+                <tr>
+                    <td><code>i_verbose_mode</code></td>
+                    <td>Adjust the amount of details.</td>
+                </tr>
+                <tr>
+                    <td><code>i_raise_if_fail</code></td>
+                    <td>Raise an exception if a rule is failed.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Examples</h4>
+        <pre>exec occ.api.check_rule(i_rule_id_or_code => 'OCC-30010');</pre>
+
+        <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 40px 0;">
+
+        <h3 id="CHECK_RULE_FUNC">CHECK_RULE Function<span class="type-tag">FUNCTION</span></h3>
+        <p>Verify the rule according to the RULE_ID or CODE in RULESET.</p>
+
+        <h4>Syntax</h4>
+        <pre>function check_rule(
+    i_rule_id_or_code in varchar2,
+    i_verbose_mode    in binary_integer default 1,
+    i_raise_if_fail   in binary_integer default 0)
+  return string_c;</pre>
+
+        <h4>Parameters</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Parameter</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>i_rule_id_or_code</code></td>
+                    <td>A valid RULE_ID or CODE from RULESET. If not valid exception e_invalid_rule_id or e_invalid_code is raised.</td>
+                </tr>
+                <tr>
+                    <td><code>i_verbose_mode</code></td>
+                    <td>Adjust the amount of details.</td>
+                </tr>
+                <tr>
+                    <td><code>i_raise_if_fail</code></td>
+                    <td>Raise an exception if a rule is failed.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Examples</h4>
+        <pre>select * from occ.api.check_rule(i_rule_id_or_code => 'OCC-30010');</pre>
+
+        <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 40px 0;">
+
+        <h3 id="CHECK_RULES_PROC">CHECK_RULES Procedure<span class="type-tag">PROCEDURE</span></h3>
+        <p>Verify all rules that belongs to one of the associated dimension (rule_object, characteristic, severity), a tag or to all defined rules.</p>
+
+        <h4>Syntax</h4>
+        <pre>procedure check_rules(
+    i_value         in varchar2 default null,
+    i_verbose_mode  in boolean default true,
+    i_raise_if_fail in boolean default false);</pre>
+
+        <h4>Parameters</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Parameter</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>i_value</code></td>
+                    <td>One of the following rule_objects, severities, characteristics: PLSQL_UNIT, SQL_DATA_OBJECT, DATABASE_OBJECT, APEX INFO, MINOR, MAJOR, CRITICAL, BLOCKER CHANGEABILITY, EFFICIENCY, MAINTAINABILITY,  PORTABILITY,  RELIABILITY,  REUSABILITY,  SECURITY, TESTABILITY or one of the defined TAGS (case insensitive). If a severity keyword is chosen, all severity levels greater or equal are used. If parameter is not valid exception e_invalid_value is raised. If parameter is NULL all available rules will verified.</td>
+                </tr>
+                <tr>
+                    <td><code>i_verbose_mode</code></td>
+                    <td>Adjust the amount of details.</td>
+                </tr>
+                <tr>
+                    <td><code>i_raise_if_fail</code></td>
+                    <td>Raise an exception if a rule is failed.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Examples</h4>
+        <pre>exec occ.api.check_rules(i_value => OCC.API.MAINTAINABILITY);</pre>
+
+        <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 40px 0;">
+
+        <h3 id="CHECK_RULES_FUNC">CHECK_RULES Function<span class="type-tag">FUNCTION</span></h3>
+        <p>Verify all rules that belongs to one of the associated dimension (rule_object, characteristic, severity), a tag or to all defined rules.</p>
+
+        <h4>Syntax</h4>
+        <pre>function check_rules(
+    i_value         in varchar2 default null,
+    i_verbose_mode  in binary_integer default 1,
+    i_raise_if_fail in binary_integer default 0);</pre>
+
+        <h4>Parameters</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Parameter</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>i_value</code></td>
+                    <td>One of the following rule_objects, severities, characteristics: PLSQL_UNIT, SQL_DATA_OBJECT, DATABASE_OBJECT, APEX INFO, MINOR, MAJOR, CRITICAL, BLOCKER CHANGEABILITY, EFFICIENCY, MAINTAINABILITY,  PORTABILITY,  RELIABILITY,  REUSABILITY,  SECURITY, TESTABILITY or one of the defined TAGS (case insensitive). If a severity keyword is chosen, all severity levels greater or equal are used. If parameter is not valid exception e_invalid_value is raised. If parameter is NULL all available rules will verified.</td>
+                </tr>
+                <tr>
+                    <td><code>i_verbose_mode</code></td>
+                    <td>Adjust the amount of details.</td>
+                </tr>
+                <tr>
+                    <td><code>i_raise_if_fail</code></td>
+                    <td>Raise an exception if a rule is failed.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Examples</h4>
+        <pre>select * from occ.api.check_rules(i_value => 'MAINTAINABILITY');</pre>
+
+    </main>
+</body>
+</html>
