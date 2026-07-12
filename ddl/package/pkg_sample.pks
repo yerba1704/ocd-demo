@@ -6,11 +6,11 @@ is
   pragma deprecate(pkg_sample, 'PKG_SAMPLE has been deprecated, use ... instead.');
 
   -- This is an example of a subtype description.
-  subtype counter is naturaln;
-  pragma deprecate (counter, 'PKG_SAMPLE.COUNTER is deprecated, use ... instead.');
+  subtype s_counter is naturaln;
+  pragma deprecate (s_counter, 'PKG_SAMPLE.S_COUNTER is deprecated, use ... instead.');
 
   -- This is an example of a constant description.
-  c_magic_number constant counter := 1704;
+  c_magic_number constant s_counter := 1704;
 
   -- This is an example of an exception description.
   e_parsing_failed exception; 
