@@ -5,6 +5,17 @@ create or replace package pkg_sample authid current_user
 is
   pragma deprecate(pkg_sample, 'PKG_SAMPLE has been deprecated, use ... instead.');
 
+  -- This is an example of a subtype description.
+  subtype counter is naturaln;
+  pragma deprecate (counter, 'PKG_SAMPLE.COUNTER is deprecated, use ... instead.');
+
+  -- This is an example of a constant description.
+  c_magic_number constant counter := 1704;
+
+  -- This is an example of an exception description.
+  e_parsing_failed exception; 
+  pragma deprecate (e_parsing_failed, 'PKG_SAMPLE.E_PARSING_FAILED is deprecated, use ... instead.');
+
   -- This is an example of a procedure description.
   procedure p_noop;
   pragma deprecate (p_noop);
@@ -22,13 +33,6 @@ is
   --  dbms_output.put_line( 'square of 2 is '||f_square(2) );
   --end;
   function f_square(i_value number default 3) return number;
-
-  -- This is an example of a constant description.
-  c_magic_number constant integer := 1704;
-
-  -- This is an example of an exception description.
-  e_parsing_failed exception; 
-  pragma deprecate (e_parsing_failed, 'PKG_SAMPLE.E_PARSING_FAILED is deprecated, use ... instead.');
 
   -- This is an example of an associative array description.
   -- It was formerly called PL/SQL table or index-by table.
