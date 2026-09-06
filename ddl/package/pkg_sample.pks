@@ -46,7 +46,8 @@ is
   -- @The name of the operating system.
   -- @Processor type of the system (in bit).
   type t_os_r is record (
-      platform     varchar2(64 char),
-      architecture integer
+    platform     varchar2(64 char),
+    architecture integer
   );
 end pkg_sample;
+/
