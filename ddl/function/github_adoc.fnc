@@ -1,8 +1,12 @@
-create or replace function github_adoc(i_package_name in varchar2, i_schema_name in varchar2 default user) return clob authid current_user
+create or replace function github_adoc(
+    i_package_name  in  varchar2,
+    i_schema_name   in  varchar2  default user,
+    i_json_string   in  clob      default null)
+  return clob authid current_user
 as
   c_package_name constant dbms_id_128 not null:=i_package_name;
   c_schema_name constant dbms_id_128 not null:=i_schema_name;
-  c_json_string constant clob:=ocd.api.information(i_package_name,i_schema_name);
+  c_json_string constant clob:=coalesce(i_json_string, ocd.api.information(c_package_name,c_schema_name));
   c_json json_object_t:=json_object_t(c_json_string);
   l_components json_array_t;
   l_component json_object_t;
