@@ -63,7 +63,7 @@ For the `API` package from [ora* CODECOP](https://github.com/yerba1704/occ) proj
 
 ## Requirements
 
-**ora* CODEDOC** will run on any Oracle Database version 18c or above.
+__ora* CODEDOC__ will run on any Oracle Database version 18c or above.
 
 ## Contributing to the project
 
