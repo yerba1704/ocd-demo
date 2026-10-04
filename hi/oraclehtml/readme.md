@@ -1,3 +1,0 @@
-Example SQL for generating HTML website.
-
-Feel free to modify [code.sql](code.sql)...

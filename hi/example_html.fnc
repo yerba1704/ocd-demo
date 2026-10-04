@@ -1,11 +1,15 @@
--- FINAL :) -----
-clear screen
-set serveroutput on
-set feedback off
-declare
+create or replace function example_html(
+    i_package_name  in  varchar2,
+    i_schema_name   in  varchar2  default user,
+    i_json_string   in  clob      default null)
+  return clob authid current_user
+as
   c_website_instead_of_only_html_code constant boolean:=true;
+  c_package_name constant dbms_id_128 not null:=i_package_name;
+  c_schema_name constant dbms_id_128 not null:=i_schema_name;
+  c_json_string constant clob:=coalesce(i_json_string, ocd.api.information(c_package_name,c_schema_name));
 --  c_package_name constant dbms_id_30:='PKG_SAMPLE';
-  c_package_name constant dbms_id_30:='APEX_CSS_MODIFIED';
+  --c_package_name constant dbms_id_30:='APEX_CSS_MODIFIED';
   c_html_skeleton constant clob:=q'[<!doctype html>
 <html lang="en">
 <head>
@@ -75,7 +79,8 @@ declare
                max(parameter_index) over (partition by component_index) as parameter_count,
                max(example_index) over (partition by component_index) as example_count
           from json_table (
-                ocd.api.information(c_package_name),
+                c_json_string,
+                --ocd.api.information(c_package_name),
                 '$' columns (
                   package_name varchar2(  30 char) path '$.name',
                   package_desc varchar2(4000 char) path '$.desc',
@@ -173,10 +178,9 @@ begin
   end loop toc;
 
   -- output
-  if c_website_instead_of_only_html_code 
-    then dbms_output.put_line( replace(c_html_skeleton,'§',l_html) );
-    else dbms_output.put_line( l_html );
-  end if;
+  return case when c_website_instead_of_only_html_code 
+          then replace(c_html_skeleton,'§',l_html)
+          else l_html
+         end;
 end;
 /
-set feedback on

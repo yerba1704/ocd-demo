@@ -1,4 +1,4 @@
-create or replace function github_adoc(
+create or replace function example_adoc(
     i_package_name  in  varchar2,
     i_schema_name   in  varchar2  default user,
     i_json_string   in  clob      default null)
@@ -157,4 +157,4 @@ begin
   end loop;
 
   return l_top||l_sub;
-end github_adoc;
+end example_adoc;

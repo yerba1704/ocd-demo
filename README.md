@@ -28,6 +28,9 @@ The following sample packages are included in `OCD_DEMO` after installation:
 
 - [APEX_CSS_MODIFIED](ddl/package/apex_css_modified.pks) is the original Oracle APEX package, reformatted in the style of __ora* CODEDOC syntax (OCDs)__.
 
+Some standalone functions are also installed (from [hi/](hi/) folder).
+See [Sample publisher](#sample-publisher) for more information.
+
 ## Sample publisher
 
 The [ai/](ai/) folder contains some websites made by popular AI Platforms & Assistants (like ChatGPT, Claude or Gemini) with the  JSON provided by __ora* CODEDOC__.

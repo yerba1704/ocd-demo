@@ -25,27 +25,21 @@ create user ocd_demo identified by "&ocd_demo_password"
                        default tablespace &ocd_demo_tablespace
                        quota 5m on &ocd_demo_tablespace;
 grant create session,
-      create procedure,
-      create type,
-      under any type
+      create procedure
    to ocd_demo;
 
 alter session set current_schema=ocd_demo;
 alter session set plsql_warnings='DISABLE:ALL';
 --------------------------------------------------------------------------------
-prompt >>> create some apex packages
+prompt >>> create some sample packages
 
---@ddl/package/wwv_flow_security_minimal.pks
-
---@ddl/package/apex_acl.pks
---@ddl/package/apex_acl_mod.pks
---@ddl/package/apex_ai.pks
 @ddl/package/pkg_sample.pks
 @ddl/package/apex_css.pks
 @ddl/package/apex_css_modified.pks
 --------------------------------------------------------------------------------
---prompt >>> create some sys packages
+--prompt >>> create some sample publisher
 
---@ddl/package/....pks
+@hi/example_adoc.fnc
+@hi/example_html.fnc
 --------------------------------------------------------------------------------
 prompt >>> done <<<
