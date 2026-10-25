@@ -23,8 +23,13 @@ as
 <body>
   <main>
     <article>
-<!-- generated code by ora* CODECOP -->
-§    </article>
+
+<!--  generated code by ora* CODECOP (beg) -->
+
+§
+<!--  generated code by ora* CODECOP (end) -->
+
+    </article>
   </main>
 </body>
 </html>
@@ -35,8 +40,8 @@ as
   l_html clob;
   cursor pkg_info is
     select toc_oradb,toc_apex,srt,
-           listagg( distinct '<li>'||htf.anchor('#'||upper(replace(toc_oradb,' ')),toc_oradb)||'</li>'||chr(10) ) within group(order by toc_oradb) over (partition by 1) as tocinfo_oradb,
-           listagg( distinct '<li>'||htf.anchor('#'||upper(replace(toc_apex,' ')),toc_apex)||'</li>'||chr(10) ) within group(order by srt) over (partition by 1) as tocinfo_apex,
+           listagg( distinct '  <li>'||htf.anchor('#'||upper(replace(toc_oradb,' ')),toc_oradb)||'</li>'||chr(10) ) within group(order by toc_oradb) over (partition by 1) as tocinfo_oradb,
+           listagg( distinct '  <li>'||htf.anchor('#'||upper(replace(toc_apex,' ')),toc_apex)||'</li>'||chr(10) ) within group(order by srt) over (partition by 1) as tocinfo_apex,
            package_name,package_desc,
            component_name, component_type, component_desc, component_syntax, component_index,
            case when srt=lead(srt,1) over (order by srt) then 0 else 1 end as last_component_type_fl,
@@ -47,7 +52,7 @@ as
            end as parameterinfo,
            any_value(parameter_count) as parameter_count,
            case when any_value(example_count) is not null then
-            listagg('<p>'||example_name||'</p>'||htf.code(htf.preopen||example_code||htf.preclose)) within group (order by parameter_index, example_code)
+            listagg('  <p>'||example_name||'  </p>'||htf.code(htf.preopen||example_code||htf.preclose)) within group (order by parameter_index, example_code)
            end as exampleinfo,
            any_value(example_count) as example_count
       from (
@@ -107,7 +112,7 @@ as
     group by toc_oradb, toc_apex, srt, package_name, package_desc, component_name, component_type, component_desc, component_syntax, component_index
     order by srt;
   ---------
-  procedure attach(i_html in varchar2) is begin l_html:=l_html||i_html||chr(10); end attach;
+  procedure attach(i_html in varchar2 default null) is begin l_html:=l_html||i_html||chr(10); end attach;
 begin
   /* Reference: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AI.html */
   for i in pkg_info loop
@@ -115,21 +120,23 @@ begin
     if l_html is null then
       attach( htf.header(1,i.package_name) );     -- h1   <packagename>
       attach( '<p>'||i.package_desc||'</p>' );    -- p    <packagedesc>
+      attach;
       attach( htf.ulistopen );                    -- ul
       attach( rtrim(i.tocinfo_apex,chr(10)) );    --  li+a <tocinfo>
       attach( htf.ulistclose );                   -- ul
+      attach;
     end if;
 
       if i.component_type in ('CONSTANT') then
         if l_constants_not_yet_started then
           attach( htf.header (nsize=>2,cheader=>i.toc_apex,cattributes=>'id="'||upper(replace(i.toc_apex,' '))||'"') );
-          attach( '<p>The '||c_package_name||' package defines several constants for specifying parameter values.</p>' );
-          attach( '<table><tr><th>Name</th><th>Description</th></tr>' );
+          attach( '  <p>The '||c_package_name||' package defines several constants for specifying parameter values.</p>' );
+          attach( '  <table><tr><th>Name</th><th>Description</th></tr>' );
           l_constants_not_yet_started:=false;
         end if;
-        attach('<tr>'||htf.tabledata(i.component_name)||htf.tabledata(i.component_desc)||'</tr>');
+        attach('    <tr>'||htf.tabledata(i.component_name)||htf.tabledata(i.component_desc)||'</tr>');
         if i.last_component_type_fl=1 then
-          attach('</table>');
+          attach('  </table>');
         end if;
       end if;
   
@@ -160,20 +167,23 @@ begin
       end if;
   
       if i.component_type in ('FUNCTION','PROCEDURE') then
+        attach;
         attach( htf.header (nsize=>2,cheader=>i.toc_apex,cattributes=>'id="'||upper(replace(i.toc_apex,' '))||'"') );
         attach( '<p>'||i.component_desc||'</p>' );
+        attach;
         attach( htf.header (nsize=>3,cheader=>'Syntax') );
         attach( htf.code(htf.preopen||i.component_syntax||htf.preclose) );
         if i.parameterinfo is not null then 
+          attach;
           attach( htf.header (nsize=>3,cheader=>'Parameter'||case when i.parameter_count>1 then 's' end) );
           attach( i.parameterinfo );
         end if;
-  --TODO subprogram example
         if i.exampleinfo is not null then
+          attach;
           attach( htf.header (nsize=>3,cheader=>'Example'||case when i.example_count>1 then 's' end) );
           attach( i.exampleinfo );
         end if;
-  --TODO subprogram example copy button
+--TODO subprogram example copy button
       end if;
   end loop toc;
 

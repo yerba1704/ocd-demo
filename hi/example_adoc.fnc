@@ -4,8 +4,8 @@ create or replace function example_adoc(
     i_json_string   in  clob      default null)
   return clob authid current_user
 as
-  c_package_name constant dbms_id_128 not null:=i_package_name;
-  c_schema_name constant dbms_id_128 not null:=i_schema_name;
+  c_package_name constant dbms_id_128 not null:=upper(i_package_name);
+  c_schema_name constant dbms_id_128 not null:=upper(i_schema_name);
   c_json_string constant clob:=coalesce(i_json_string, ocd.api.information(c_package_name,c_schema_name));
   c_json json_object_t:=json_object_t(c_json_string);
   l_components json_array_t;
@@ -22,6 +22,10 @@ as
 -- TODO directly like l_sub...
   procedure attach(i_txt in varchar2 default null) is begin l_top:=l_top||i_txt||chr(10); end attach;
 begin
+  if json_value(c_json_string, '$.status')='NO_DATA_FOUND' then
+    return '> NO_DATA_FOUND';
+  end if;
+
   attach('= '||c_package_name);
   attach;
   attach(c_json.get_string('desc'));
@@ -35,6 +39,7 @@ begin
     l_type:=l_component.get_string('type');
     if l_type='CONSTANT'  then l_type:='Constants';   end if;
     if l_type='SUBTYPE'   then l_type:='Datatypes';   end if;
+    if l_type='TYPE'      then l_type:='Datatypes';   end if;
     if l_type='EXCEPTION' then l_type:='Exceptions';  end if;
     if l_type='PROCEDURE' then l_type:='Subprograms'; end if;
     if l_type='FUNCTION'  then l_type:='Subprograms'; end if;
@@ -69,17 +74,18 @@ begin
       -- with examples if exists...
       if l_component.get_array('examples') is not null then
         l_sub:=l_sub||chr(10);
-        l_sub:=l_sub||'==== Example'||case when l_component.get_array('examples').get_size>1 then 's' end||chr(10);
-        l_sub:=l_sub||chr(10);
+        l_sub:=l_sub||'==== Example'||case when l_component.get_array('examples').get_size>1 then 's' end;
         for e in 0..l_component.get_array('examples').get_size-1 loop
           l_example:=treat(l_component.get_array('examples').get(e) as json_object_t);
           if l_component.get_array('examples').get_size>1 then
-            l_sub:=l_sub||'Example '||to_char(e+1)||chr(10);
+            l_sub:=l_sub||chr(10)||chr(10)||'Example '||to_char(e+1)||chr(10)||chr(10);
+          else
+            l_sub:=l_sub||chr(10)||chr(10);
           end if;
           l_sub:=l_sub||'[source,sql]'||chr(10);
           l_sub:=l_sub||'----'||chr(10);
           l_sub:=l_sub||l_example.get_string('code')||chr(10);
-          l_sub:=l_sub||'----'||chr(10);
+          l_sub:=l_sub||'----';
         end loop;
       end if;
       l_sub:=l_sub||chr(10);
