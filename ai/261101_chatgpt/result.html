@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PKG_SAMPLE PL/SQL package reference: subprograms, types, constants, exceptions, and the complete package specification.">
+  <title>PKG_SAMPLE | PL/SQL Packages and Types Reference</title>
+  <style>
+    :root { color-scheme: light; --ink: #252421; --muted: #65645e; --link: #00677e; --line: #deded9; --paper: #fff; --subtle: #f5f5f2; --accent: #c74634; --header: #302f2c; }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 24px; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 16px/1.6 "Segoe UI", "Helvetica Neue", sans-serif; letter-spacing: 0; }
+    a { color: var(--link); text-decoration: none; text-underline-offset: 3px; }
+    a:hover { text-decoration: underline; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid #007d99; outline-offset: 3px; }
+    [hidden] { display: none !important; }
+    .skip { position: fixed; top: -80px; left: 16px; padding: 10px 20px; background: white; z-index: 20; }
+    .skip:focus { top: 8px; }
+    .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .symbols { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .topbar { background: var(--header); color: white; padding: 15px 32px; display: flex; align-items: center; gap: 20px; min-height: 66px; border-bottom: 4px solid var(--accent); }
+    .brand { display: flex; align-items: center; gap: 12px; color: white; font-size: 19px; font-weight: 600; }
+    .brand .icon { width: 28px; height: 28px; color: #efb4a9; }
+    .topbar .context { border-left: 1px solid #73716b; padding-left: 20px; color: #e0dfda; font-size: 14px; }
+    .topbar .edition { margin-left: auto; font-size: 13px; color: #deddd7; }
+    .bookhead { padding: 22px 32px 25px; background: #f3f3f0; border-bottom: 1px solid var(--line); }
+    .breadcrumbs { display: flex; flex-wrap: wrap; gap: 9px; font-size: 13px; margin-bottom: 10px; color: var(--muted); }
+    .breadcrumbs span + span::before { content: "/"; margin-right: 9px; color: #99978f; }
+    .booktitle { margin: 0; font-size: 25px; font-weight: 500; line-height: 1.35; }
+    .layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); max-width: 1600px; margin: auto; }
+    .sidebar { border-right: 1px solid var(--line); background: #fafaf8; padding: 25px 20px 36px; position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; }
+    .sidebar h2 { font-size: 15px; margin: 0 0 17px; font-weight: 600; }
+    .search { display: flex; align-items: center; gap: 9px; border: 1px solid #a7aaa7; border-radius: 3px; background: white; padding: 8px 10px; margin-bottom: 20px; }
+    .search .icon { color: var(--muted); width: 17px; height: 17px; }
+    .search input { width: 100%; min-width: 0; border: 0; background: transparent; color: var(--ink); font-size: 13px; outline: none; }
+    .search:focus-within { outline: 2px solid var(--link); outline-offset: 2px; }
+    .nav-root { font-size: 14px; font-weight: 650; display: block; margin-bottom: 10px; }
+    .toc-group { margin: 4px 0; }
+    .toc-group summary { font-size: 14px; padding: 7px 3px; cursor: pointer; }
+    .toc-group a, .nav-item { display: block; padding: 7px 10px 7px 19px; font-size: 13px; border-left: 3px solid transparent; }
+    .toc-group a { margin-left: 6px; font-family: Consolas, "Liberation Mono", monospace; }
+    .sidebar a[aria-current="location"] { background: #e8efef; border-left-color: var(--link); color: #004c5e; font-weight: 600; }
+    .toc-group a:hover, .nav-item:hover { background: #eff0ec; }
+    .sidebar-note { border-top: 1px solid var(--line); margin-top: 25px; padding-top: 16px; font-size: 12px; color: var(--muted); }
+    #search-status { font-size: 13px; margin: 10px 0; color: var(--muted); }
+    .content { min-width: 0; padding: 29px 52px 60px; max-width: 1100px; }
+    .article-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 23px; }
+    .eyebrow { font-size: 12px; color: var(--muted); text-transform: uppercase; }
+    .actions { display: flex; gap: 4px; margin-left: auto; }
+    .icon-button { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid transparent; border-radius: 3px; color: var(--muted); background: transparent; }
+    .icon-button:hover { border-color: #b7bab6; background: #ededeb; color: var(--ink); }
+    h1 { font-size: 36px; font-weight: 450; margin: 0 0 14px; line-height: 1.2; overflow-wrap: anywhere; }
+    h2 { font-size: 24px; font-weight: 500; line-height: 1.3; margin: 0 0 18px; }
+    h3 { font-size: 19px; font-weight: 600; line-height: 1.4; margin: 0 0 12px; overflow-wrap: anywhere; }
+    h4 { font-size: 15px; font-weight: 650; margin: 23px 0 10px; }
+    p { margin: 0 0 16px; }
+    code { font-family: Consolas, "Liberation Mono", monospace; font-size: .9em; overflow-wrap: anywhere; }
+    .metadata { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 23px; color: var(--muted); font-size: 13px; }
+    .badge { display: inline-block; border: 1px solid #d6b7a3; color: #82502e; background: #fcf4ec; border-radius: 3px; font-size: 11px; line-height: 1.5; padding: 2px 7px; font-weight: 600; vertical-align: middle; }
+    .notice { margin: 24px 0; border-left: 4px solid #bd793c; background: #faf6f0; padding: 14px 18px; font-size: 14px; overflow-wrap: anywhere; }
+    .notice strong { display: block; margin-bottom: 4px; }
+    .notice p { margin: 0; }
+    .note { border-left-color: #548b91; background: #f0f6f6; }
+    .section { margin-top: 38px; padding-top: 30px; border-top: 1px solid var(--line); }
+    .member { padding-top: 27px; margin-top: 28px; border-top: 1px solid #e8e8e3; }
+    .section > .member:first-of-type { border-top: 0; padding-top: 0; }
+    .number { color: #73736c; font-weight: 400; margin-right: 8px; }
+    .section-links { display: flex; flex-wrap: wrap; column-gap: 24px; row-gap: 6px; margin: 21px 0 4px; padding: 0; list-style: none; font-size: 14px; }
+    .table-wrap { overflow-x: auto; margin: 15px 0 20px; }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; text-align: left; }
+    caption { text-align: left; color: var(--muted); font-size: 13px; padding-bottom: 10px; }
+    th { font-weight: 600; background: #f0f1ed; border-top: 1px solid #c9cbc5; }
+    th, td { padding: 12px 15px; vertical-align: top; border-bottom: 1px solid var(--line); }
+    td:first-child { width: 27%; }
+    .summary-table td:first-child { width: 30%; }
+    .summary-table td:nth-child(2) { white-space: nowrap; }
+    .summary-table .badge { display: block; width: fit-content; margin-top: 5px; }
+    .codeblock { background: var(--subtle); border: 1px solid var(--line); margin: 12px 0 20px; border-radius: 3px; overflow: hidden; }
+    .codebar { display: flex; justify-content: space-between; align-items: center; min-height: 38px; border-bottom: 1px solid var(--line); padding: 0 8px 0 16px; font-size: 11px; color: var(--muted); background: #eeefeb; }
+    .codebar .icon-button { width: 30px; height: 30px; }
+    .codebar .icon { width: 16px; height: 16px; }
+    pre { margin: 0; padding: 17px 19px; overflow: auto; tab-size: 2; font-size: 14px; line-height: 1.65; }
+    pre code { font-size: inherit; overflow-wrap: normal; }
+    .keyword { color: #005e74; font-weight: 600; }
+    .literal { color: #8d4230; }
+    .comment { color: #687365; }
+    .small { font-size: 13px; color: var(--muted); }
+    .source-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .source-heading h2 { margin-bottom: 0; }
+    footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--muted); }
+    .mobile-toggle { display: none; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--header); color: white; padding: 11px 20px; border-radius: 4px; box-shadow: 0 3px 14px #0002; max-width: calc(100% - 32px); font-size: 14px; z-index: 30; }
+    @media (min-width: 1600px) { .layout { border-left: 1px solid var(--line); border-right: 1px solid var(--line); } }
+    @media (max-width: 1050px) { .layout { grid-template-columns: 245px minmax(0, 1fr); } .content { padding: 28px 30px 45px; } }
+    @media (max-width: 760px) {
+      .topbar { padding: 13px 20px; gap: 12px; }
+      .topbar .context { display: none; }
+      .topbar .edition { font-size: 12px; }
+      .brand { font-size: 17px; }
+      .bookhead { padding: 18px 20px 21px; }
+      .booktitle { font-size: 21px; }
+      .layout { display: block; }
+      .mobile-toggle { display: flex; align-items: center; gap: 10px; background: #f7f7f4; color: var(--ink); border: 0; border-bottom: 1px solid var(--line); padding: 12px 20px; width: 100%; font-size: 14px; }
+      .sidebar { display: none; position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); }
+      .sidebar.is-open { display: block; }
+      .content { padding: 23px 20px 40px; }
+      h1 { font-size: 30px; }
+      h2 { font-size: 22px; }
+      th, td { padding: 10px; }
+      .summary-table { min-width: 520px; }
+      .section { margin-top: 30px; padding-top: 25px; }
+      pre { font-size: 13px; padding: 14px; }
+    }
+    @media print {
+      .topbar, .sidebar, .mobile-toggle, .actions, .icon-button, .toast, .skip { display: none !important; }
+      .layout { display: block; }
+      .content { max-width: none; padding: 20px 0; }
+      .bookhead { padding: 0 0 15px; background: none; }
+      body { font-size: 11pt; }
+      h2, h3, h4 { break-after: avoid; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 9pt; }
+      .codeblock, .notice, tr { break-inside: avoid; }
+      a { color: inherit; }
+      .table-wrap { overflow: visible; }
+      .summary-table { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></symbol>
+    <symbol id="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="copy-icon" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="download-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="print-icon" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="code-icon" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6m6-14-4 16"/></symbol>
+    <symbol id="menu-icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  </defs></svg>
+  <header>
+    <div class="topbar">
+      <a class="brand" href="#overview"><svg class="icon" aria-hidden="true"><use href="#book"/></svg>Database Reference</a>
+      <span class="context">PL/SQL Documentation</span>
+      <span class="edition">Oracle Database</span>
+    </div>
+    <div class="bookhead">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><span>Database</span><span>PL/SQL</span><span>Package Reference</span></nav>
+      <p class="booktitle">PL/SQL Packages and Types Reference</p>
+    </div>
+  </header>
+  <button class="mobile-toggle" id="menu-toggle" aria-expanded="false" aria-controls="sidebar"><svg class="icon" aria-hidden="true"><use href="#menu-icon"/></svg>Table of Contents</button>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Table of Contents">
+      <h2>Table of Contents</h2>
+      <label class="search"><svg class="icon" aria-hidden="true"><use href="#search-icon"/></svg><input id="member-search" type="search" placeholder="Filter members" aria-label="Filter package members" autocomplete="off"></label>
+      <nav aria-label="Package contents">
+        <a class="nav-root" href="#overview">1 &nbsp; PKG_SAMPLE</a>
+        <a class="nav-item" href="#overview" aria-current="location">Overview</a>
+        <a class="nav-item" href="#security">Security Model</a>
+        <a class="nav-item" href="#summary">Summary of Members</a>
+        <details class="toc-group" open><summary>Types and Subtypes</summary>
+          <a href="#s_counter" data-member>S_COUNTER</a>
+          <a href="#t_number_aa" data-member>T_NUMBER_AA</a>
+          <a href="#t_number_va" data-member>T_NUMBER_VA</a>
+          <a href="#t_number_nt" data-member>T_NUMBER_NT</a>
+          <a href="#t_os_r" data-member>T_OS_R</a>
+        </details>
+        <details class="toc-group" open><summary>Constants</summary><a href="#c_magic_number" data-member>C_MAGIC_NUMBER</a></details>
+        <details class="toc-group" open><summary>Exceptions</summary><a href="#e_parsing_failed" data-member>E_PARSING_FAILED</a></details>
+        <details class="toc-group" open><summary>Subprograms</summary><a href="#p_noop" data-member>P_NOOP</a><a href="#f_square" data-member>F_SQUARE</a></details>
+        <a class="nav-item" href="#source">Package Specification</a>
+      </nav>
+      <p id="search-status" role="status" hidden></p>
+      <div class="sidebar-note">PKG_SAMPLE<br>Package specification<br>Invoker's rights</div>
+    </aside>
+    <main class="content" id="main" tabindex="-1">
+      <div class="article-tools"><span class="eyebrow">Package reference</span><div class="actions">
+        <a class="icon-button" href="#source" title="View package specification" aria-label="View package specification"><svg class="icon" aria-hidden="true"><use href="#code-icon"/></svg></a>
+        <button class="icon-button" id="download-top" title="Download package specification" aria-label="Download package specification"><svg class="icon" aria-hidden="true"><use href="#download-icon"/></svg></button>
+        <button class="icon-button" id="print" title="Print reference" aria-label="Print reference"><svg class="icon" aria-hidden="true"><use href="#print-icon"/></svg></button>
+      </div></div>
+      <section id="overview" aria-labelledby="package-title">
+        <h1 id="package-title"><span class="number">1</span> PKG_SAMPLE</h1>
+        <div class="metadata"><span class="badge">Deprecated</span><span>AUTHID CURRENT_USER</span><span>&middot;</span><span>9 public members</span></div>
+        <p>This is an example of a package description.</p>
+        <p>Line breaks are ignored but blank lines results in paragraphs.</p>
+        <div class="notice"><strong>Deprecated</strong><p>PKG_SAMPLE has been deprecated, use ... instead.</p></div>
+        <ul class="section-links"><li><a href="#security">Security Model</a></li><li><a href="#summary">Summary of Members</a></li><li><a href="#types">Types and Subtypes</a></li><li><a href="#subprograms">Subprograms</a></li><li><a href="#source">Package Specification</a></li></ul>
+      </section>
+      <section class="section" id="security">
+        <h2><span class="number">1.1</span> Security Model</h2>
+        <p><code>PKG_SAMPLE</code> is an invoker's rights package, declared with <code>AUTHID CURRENT_USER</code>. At run time, privilege checking and name resolution follow Oracle's invoker's rights rules.</p>
+        <div class="codeblock"><pre><code>create or replace package pkg_sample authid current_user</code></pre></div>
+      </section>
+      <section class="section" id="summary">
+        <h2><span class="number">1.2</span> Summary of Members</h2>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Summary of package members"><table class="summary-table">
+          <caption>Table 1-1 &nbsp; PKG_SAMPLE package members</caption>
+          <thead><tr><th scope="col">Member</th><th scope="col">Kind</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#s_counter"><code>S_COUNTER</code></a><span class="badge">Deprecated</span></td><td>Subtype</td><td>Subtype of <code>NATURALN</code>.</td></tr>
+            <tr><td><a href="#c_magic_number"><code>C_MAGIC_NUMBER</code></a></td><td>Constant</td><td>A counter constant with the value <code>1704</code>.</td></tr>
+            <tr><td><a href="#e_parsing_failed"><code>E_PARSING_FAILED</code></a><span class="badge">Deprecated</span></td><td>Exception</td><td>A user-defined exception.</td></tr>
+            <tr><td><a href="#p_noop"><code>P_NOOP</code></a><span class="badge">Deprecated</span></td><td>Procedure</td><td>An example procedure with no parameters.</td></tr>
+            <tr><td><a href="#f_square"><code>F_SQUARE</code></a></td><td>Function</td><td>Returns the square of a number.</td></tr>
+            <tr><td><a href="#t_number_aa"><code>T_NUMBER_AA</code></a></td><td>Associative array</td><td>Numbers indexed by <code>VARCHAR2(64 CHAR)</code>.</td></tr>
+            <tr><td><a href="#t_number_va"><code>T_NUMBER_VA</code></a></td><td>Varray</td><td>A variable-size array of up to five numbers.</td></tr>
+            <tr><td><a href="#t_number_nt"><code>T_NUMBER_NT</code></a></td><td>Nested table</td><td>A nested table of numbers.</td></tr>
+            <tr><td><a href="#t_os_r"><code>T_OS_R</code></a></td><td>Record</td><td>Operating system platform and architecture.</td></tr>
+          </tbody>
+        </table></div>
+        <p class="small">Member badges reflect explicit member-level pragmas. The package itself is deprecated.</p>
+      </section>
+      <section class="section" id="types">
+        <h2><span class="number">1.3</span> Types and Subtypes</h2>
+        <article class="member" id="s_counter">
+          <h3><span class="number">1.3.1</span> S_COUNTER Subtype</h3>
+          <p>This is an example of a subtype description.</p>
+          <div class="notice"><strong>Deprecated</strong><p>PKG_SAMPLE.S_COUNTER is deprecated, use ... instead.</p></div>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>subtype s_counter is naturaln;</code></pre></div>
+          <p><code>NATURALN</code> accepts nonnegative integers and does not allow <code>NULL</code>.</p>
+        </article>
+        <article class="member" id="t_number_aa">
+          <h3><span class="number">1.3.2</span> T_NUMBER_AA Type</h3>
+          <p>This is an example of an associative array description. It was formerly called PL/SQL table or index-by table.</p>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>type t_number_aa is table of number index by varchar2(64 char);</code></pre></div>
+        </article>
+        <article class="member" id="t_number_va">
+          <h3><span class="number">1.3.3</span> T_NUMBER_VA Type</h3>
+          <p>This is an example of a varray (variable-size array) description.</p>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>type t_number_va is varray(5) of number;</code></pre></div>
+          <p>The array has a maximum of five <code>NUMBER</code> elements.</p>
+        </article>
+        <article class="member" id="t_number_nt">
+          <h3><span class="number">1.3.4</span> T_NUMBER_NT Type</h3>
+          <p>This is an example of a nested table description.</p>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>type t_number_nt is table of number;</code></pre></div>
+        </article>
+        <article class="member" id="t_os_r">
+          <h3><span class="number">1.3.5</span> T_OS_R Type</h3>
+          <p>This is an example of an user-defined record type description.</p>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>type t_os_r is record (
+  platform     varchar2(64 char),
+  architecture integer
+);</code></pre></div>
+          <h4>Fields</h4>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="T_OS_R fields"><table><thead><tr><th scope="col">Field</th><th scope="col">Data Type</th><th scope="col">Description</th></tr></thead><tbody>
+            <tr><td><code>platform</code></td><td><code>VARCHAR2(64 CHAR)</code></td><td>The name of the operating system.</td></tr>
+            <tr><td><code>architecture</code></td><td><code>INTEGER</code></td><td>Processor type of the system (in bit).</td></tr>
+          </tbody></table></div>
+        </article>
+      </section>
+      <section class="section" id="constants">
+        <h2><span class="number">1.4</span> Constants</h2>
+        <article class="member" id="c_magic_number"><h3><span class="number">1.4.1</span> C_MAGIC_NUMBER Constant</h3>
+          <p>This is an example of a constant description.</p>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>c_magic_number constant s_counter := 1704;</code></pre></div>
+          <p>The constant has type <a href="#s_counter"><code>S_COUNTER</code></a> and value <code>1704</code>.</p>
+        </article>
+      </section>
+      <section class="section" id="exceptions">
+        <h2><span class="number">1.5</span> Exceptions</h2>
+        <article class="member" id="e_parsing_failed"><h3><span class="number">1.5.1</span> E_PARSING_FAILED Exception</h3>
+          <p>This is an example of an exception description.</p>
+          <div class="notice"><strong>Deprecated</strong><p>PKG_SAMPLE.E_PARSING_FAILED is deprecated, use ... instead.</p></div>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>e_parsing_failed exception;</code></pre></div>
+          <p>No Oracle error number is assigned by an <code>EXCEPTION_INIT</code> pragma in this specification.</p>
+        </article>
+      </section>
+      <section class="section" id="subprograms">
+        <h2><span class="number">1.6</span> Subprograms</h2>
+        <article class="member" id="p_noop"><h3><span class="number">1.6.1</span> P_NOOP Procedure</h3>
+          <p>This is an example of a procedure description.</p>
+          <div class="notice"><strong>Deprecated</strong><p>This procedure is marked deprecated by <code>pragma deprecate(p_noop)</code>. No deprecation message is specified.</p></div>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>procedure p_noop;</code></pre></div>
+          <h4>Parameters</h4><p>None.</p>
+        </article>
+        <article class="member" id="f_square"><h3><span class="number">1.6.2</span> F_SQUARE Function</h3>
+          <p>Function for square a number. The return value is the result of multiplying the parameter by itself.</p>
+          <p>The square of any non-zero real number, whether positive or negative, is always a positive number.</p>
+          <h4>Syntax</h4><div class="codeblock"><pre><code>function f_square(i_value number default 3) return number;</code></pre></div>
+          <h4>Parameters</h4>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="F_SQUARE parameters"><table><thead><tr><th scope="col">Parameter</th><th scope="col">Mode / Type</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead><tbody><tr><td><code>i_value</code></td><td><code>IN NUMBER</code></td><td><code>3</code></td><td>A numeric value.</td></tr></tbody></table></div>
+          <h4>Return Value</h4><p>A <code>NUMBER</code>: the result of multiplying <code>i_value</code> by itself.</p>
+          <h4>Examples</h4>
+          <p class="small">Examples from the specification comments. A package body is required to execute these calls.</p>
+          <div class="codeblock" data-label="SQL · Default argument"><pre><code>select pkg_sample.f_square from dual;</code></pre></div>
+          <div class="codeblock" data-label="SQL · Explicit argument"><pre><code>select pkg_sample.f_square(4)
+  from dual;</code></pre></div>
+          <div class="codeblock" data-label="PL/SQL · Original example"><pre><code>begin
+  dbms_output.put_line( 'square of 2 is '||f_square(2) );
+end;</code></pre></div>
+          <div class="notice note"><strong>Usage Note</strong><p>The original PL/SQL example uses an unqualified <code>f_square(2)</code> call. Outside the package, use <code>pkg_sample.f_square(2)</code> and enable your client's DBMS_OUTPUT display.</p></div>
+        </article>
+      </section>
+      <section class="section" id="source">
+        <div class="source-heading"><h2><span class="number">1.7</span> Package Specification</h2><button class="icon-button" id="download-source" title="Download package specification" aria-label="Download source"><svg class="icon" aria-hidden="true"><use href="#download-icon"/></svg></button></div>
+        <div class="codeblock" data-label="pkg_sample.pks"><pre><code id="package-source">create or replace package pkg_sample authid current_user
+-- This is an example of a package description.
+--
+-- Line breaks are ignored but blank lines results in paragraphs.
+is
+  pragma deprecate(pkg_sample, 'PKG_SAMPLE has been deprecated, use ... instead.');
+
+  -- This is an example of a subtype description.
+  subtype s_counter is naturaln;
+  pragma deprecate (s_counter, 'PKG_SAMPLE.S_COUNTER is deprecated, use ... instead.');
+
+  -- This is an example of a constant description.
+  c_magic_number constant s_counter := 1704;
+
+  -- This is an example of an exception description.
+  e_parsing_failed exception; 
+  pragma deprecate (e_parsing_failed, 'PKG_SAMPLE.E_PARSING_FAILED is deprecated, use ... instead.');
+
+  -- This is an example of a procedure description.
+  procedure p_noop;
+  pragma deprecate (p_noop);
+
+  -- Function for square a number.  
+  -- The return value is the result of multiplying the parameter by itself.
+  -- @A numeric value.
+  -- The square of any non-zero real number, whether positive or negative, is
+  -- always a positive number.
+  -- ^select pkg_sample.f_square from dual;
+  -- ^
+  --select pkg_sample.f_square(4)
+  --  from dual;
+  -- ^begin
+  --  dbms_output.put_line( 'square of 2 is '||f_square(2) );
+  --end;
+  function f_square(i_value number default 3) return number;
+
+  -- This is an example of an associative array description.
+  -- It was formerly called PL/SQL table or index-by table.
+  type t_number_aa is table of number index by varchar2(64 char); 
+  -- This is an example of a varray (variable-size array) description.
+  type t_number_va is varray(5) of number;
+  -- This is an example of a nested table description.
+  type t_number_nt is table of number;
+
+  -- This is an example of an user-defined record type description.
+  -- @The name of the operating system.
+  -- @Processor type of the system (in bit).
+  type t_os_r is record (
+    platform     varchar2(64 char),
+    architecture integer
+  );
+end pkg_sample;
+/</code></pre></div>
+      </section>
+      <footer><span>PKG_SAMPLE &middot; Package Reference</span><span>Custom package documentation. Not an official Oracle publication.</span><a href="#overview">Back to top &uarr;</a></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script>
+    const sourceText = document.getElementById('package-source').textContent;
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    function notify(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.hidden = false;
+      toastTimer = setTimeout(() => { toast.hidden = true; }, 3500);
+    }
+    function icon(name) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.classList.add('icon');
+      svg.setAttribute('aria-hidden', 'true');
+      const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      use.setAttribute('href', '#' + name);
+      svg.append(use);
+      return svg;
+    }
+    async function copyCode(text, code) {
+      try {
+        await navigator.clipboard.writeText(text);
+        notify('Code copied to clipboard.');
+      } catch {
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        notify('Clipboard unavailable. Code selected for copying.');
+      }
+    }
+    const tokenPattern = /(--[^\n]*|'(?:''|[^'])*'|\b(?:create|or|replace|package|authid|current_user|is|pragma|deprecate|subtype|naturaln|constant|exception|procedure|function|number|default|return|type|table|of|index|by|varchar2|char|varray|record|integer|end|select|from|begin)\b|\b\d+\b)/gi;
+    document.querySelectorAll('.codeblock').forEach(block => {
+      const code = block.querySelector('code');
+      const text = code.textContent;
+      const bar = document.createElement('div');
+      bar.className = 'codebar';
+      const label = document.createElement('span');
+      label.textContent = block.dataset.label || 'PL/SQL';
+      const button = document.createElement('button');
+      button.className = 'icon-button';
+      button.type = 'button';
+      button.title = 'Copy code';
+      button.setAttribute('aria-label', 'Copy ' + (block.dataset.label || 'code'));
+      button.append(icon('copy-icon'));
+      button.addEventListener('click', () => copyCode(text, code));
+      bar.append(label, button);
+      block.prepend(bar);
+      const fragment = document.createDocumentFragment();
+      let offset = 0;
+      for (const match of text.matchAll(tokenPattern)) {
+        fragment.append(text.slice(offset, match.index));
+        const span = document.createElement('span');
+        span.className = match[0].startsWith('--') ? 'comment' : /^['\d]/.test(match[0]) ? 'literal' : 'keyword';
+        span.textContent = match[0];
+        fragment.append(span);
+        offset = match.index + match[0].length;
+      }
+      fragment.append(text.slice(offset));
+      code.replaceChildren(fragment);
+    });
+    function downloadSource() {
+      const url = URL.createObjectURL(new Blob([sourceText], { type: 'text/plain;charset=utf-8' }));
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'pkg_sample.pks';
+      document.body.append(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    document.getElementById('download-top').addEventListener('click', downloadSource);
+    document.getElementById('download-source').addEventListener('click', downloadSource);
+    document.getElementById('print').addEventListener('click', () => window.print());
+    const search = document.getElementById('member-search');
+    const searchStatus = document.getElementById('search-status');
+    const groups = [...document.querySelectorAll('.toc-group')];
+    let previousOpenStates = null;
+    search.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      if (query && !previousOpenStates) previousOpenStates = groups.map(group => group.open);
+      let count = 0;
+      groups.forEach((group, index) => {
+        let visible = 0;
+        group.querySelectorAll('[data-member]').forEach(link => {
+          const target = document.querySelector(link.getAttribute('href'));
+          const matches = !query || target.textContent.toLowerCase().includes(query);
+          link.hidden = !matches;
+          if (matches) { visible++; count++; }
+        });
+        group.hidden = visible === 0;
+        if (query) group.open = true;
+        else if (previousOpenStates) group.open = previousOpenStates[index];
+      });
+      if (!query) previousOpenStates = null;
+      searchStatus.hidden = !query;
+      searchStatus.textContent = count ? count + (count === 1 ? ' member found' : ' members found') : 'No matching members.';
+    });
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    menuToggle.addEventListener('click', () => {
+      const open = sidebar.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    sidebar.addEventListener('click', event => {
+      const link = event.target.closest('a');
+      if (!link || !window.matchMedia('(max-width: 760px)').matches) return;
+      sidebar.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      const target = document.querySelector(link.getAttribute('href'));
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    });
+    const navLinks = [...sidebar.querySelectorAll('a[href^="#"]')];
+    const targets = [...new Set(navLinks.map(link => document.querySelector(link.getAttribute('href'))))];
+    let scrollQueued = false;
+    function updateCurrentSection() {
+      let current = 'overview';
+      for (const target of [...targets].sort((first, second) => first.offsetTop - second.offsetTop)) {
+        if (target.getBoundingClientRect().top <= 100) current = target.id;
+      }
+      navLinks.forEach(link => {
+        if (link.hash === '#' + current && !link.classList.contains('nav-root')) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      scrollQueued = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateCurrentSection); }
+    }, { passive: true });
+    updateCurrentSection();
+  </script>
+</body>
+</html>

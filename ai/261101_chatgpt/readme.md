@@ -1,6 +1,6 @@
-## URL
+## Model
 
-https://chatgpt.com/
+Copilot, GPT-6 Astra
 
 ## PROMPT
 
