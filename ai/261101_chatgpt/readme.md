@@ -4,7 +4,7 @@ https://chatgpt.com/
 
 ## PROMPT
 
-please create a website in the style of https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/ with the source code from this package specification:
+please create a single standalone website in the style of https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/ with the source code from this package specification:
 
 create or replace package pkg_sample authid current_user
 -- This is an example of a package description.

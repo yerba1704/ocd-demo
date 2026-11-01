@@ -39,7 +39,13 @@ prompt >>> create some sample packages
 --------------------------------------------------------------------------------
 --prompt >>> create some sample publisher
 
-@hi/example_adoc.fnc
 @hi/example_html.fnc
+@hi/example_md.fnc
+@hi/example_adoc.fnc
+--------------------------------------------------------------------------------
+--prompt >>> grant access to apex playground
+grant execute on example_html to apexdata;
+grant execute on example_md to apexdata;
+grant execute on example_adoc to apexdata;
 --------------------------------------------------------------------------------
 prompt >>> done <<<

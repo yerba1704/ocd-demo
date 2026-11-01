@@ -1,15 +1,14 @@
 create or replace function example_html(
     i_package_name  in  varchar2,
     i_schema_name   in  varchar2  default user,
-    i_json_string   in  clob      default null)
+    i_json_string   in  clob      default null,
+    i_body_only     in  boolean   default true)
   return clob authid current_user
 as
-  c_website_instead_of_only_html_code constant boolean:=true;
   c_package_name constant dbms_id_128 not null:=i_package_name;
   c_schema_name constant dbms_id_128 not null:=i_schema_name;
   c_json_string constant clob:=coalesce(i_json_string, ocd.api.information(c_package_name,c_schema_name));
---  c_package_name constant dbms_id_30:='PKG_SAMPLE';
-  --c_package_name constant dbms_id_30:='APEX_CSS_MODIFIED';
+  c_website_instead_of_only_html_code constant boolean:=not i_body_only;
   c_html_skeleton constant clob:=q'[<!doctype html>
 <html lang="en">
 <head>

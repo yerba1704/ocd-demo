@@ -1,13 +1,18 @@
 # ocd-demo
 
-<p>
+<!--<p>
   <img src="https://img.shields.io/badge/Status-Work%20In%20Progress-yellow?style=flat-square" alt="Work in progress...">
-</p>
+</p>-->
+
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
 
 # Introduction
 
 This repository demonstrates the strengths of __ora* CODEDOC__.
 For more information see [ocd](https://github.com/yerba1704/ocd).
+
+If you would like to discover the full power of of __ora* CODEDOC__ interactively, you can use [this playground](https://g1cd48969ef15f7-db2021.adb.eu-frankfurt-1.oraclecloudapps.com/ords/r/api/ocd-demo/preview).
 
 ## Installation
 
@@ -45,11 +50,11 @@ The [hi/](hi/) folder contains some PL/SQL code created by humans for building s
   
   <!-- __example_md__, which returns Markdown-formatted text -->
 
-- __example_adoc__, generates a lightweight website in asciidoc similar to Oracle’s [Database PL/SQL Packages](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/) references.
+- __example_adoc__, generates a lightweight website in ASCIIdoc similar to Oracle’s [Database PL/SQL Packages](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/) references.
+
+- **example_md**, generates a lightweight website in Markdown similar to Oracle’s [Database PL/SQL Packages](https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/) references.
 
 For the `API` package from [ora* CODECOP](https://github.com/yerba1704/occ) project, you can view the result rendered by Github [online](https://github.com/yerba1704/occ/blob/main/doc/api.adoc).
-
-- __example...__
 
 <!--
 - the PL/SQL standalone function 'example_docx', which returns the binary data for a Microsoft Word DocX document (thanks to [Zoran Tica / zorantica](https://github.com/zorantica/plsql-word))
