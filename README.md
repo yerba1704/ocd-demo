@@ -6,13 +6,15 @@
 
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
+[![Made With Love](https://img.shields.io/badge/Made%20With-Love-orange.svg)]()
+[![Buy Me a Mate](https://shields.io🧉)](https://buymeacoffee.com/yerba1704)
+
 
 # Introduction
 
-This repository demonstrates the strengths of __ora* CODEDOC__.
-For more information see [ocd](https://github.com/yerba1704/ocd).
+This repository demonstrates the strengths of __ora* CODEDOC__. For more information see [ocd](https://github.com/yerba1704/ocd).
 
-If you would like to discover the full power of of __ora* CODEDOC__ interactively, you can use [this playground](https://g1cd48969ef15f7-db2021.adb.eu-frankfurt-1.oraclecloudapps.com/ords/r/api/ocd-demo/preview).
+Try __ora* CODEDOC__ interactively using the [OCD-DEMO sample application](https://g1cd48969ef15f7-db2021.adb.eu-frankfurt-1.oraclecloudapps.com/ords/r/api/ocd-demo/preview) at oracleapex.com.
 
 ## Installation
 
